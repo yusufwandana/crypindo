@@ -20,14 +20,20 @@ function App() {
   }, [])
 
   // refresh when resize screen
-  useLayoutEffect(() => {
-    function updateSize(){
-      setSize([window.innerWidth, window.innerHeight])
-    }
-    window.addEventListener('resize', updateSize)
-    updateSize()
-    return () => window.removeEventListener('resize', updateSize)
-  }, [])
+  function useWindowSize(){
+    useLayoutEffect(() => {
+      function updateSize(){
+        setSize([window.innerWidth, window.innerHeight])
+      }
+      window.addEventListener('resize', updateSize)
+      updateSize()
+      return () => window.removeEventListener('resize', updateSize)
+    }, [])
+
+    return size
+  }
+
+  useWindowSize() // its only addition, useless function
 
   const handleSearchChange = (e) => (
     setSearch(e.target.value)
@@ -43,11 +49,11 @@ function App() {
       <div className={window.innerWidth >= 640 ? "flex flex-col justify-center text-center mt-16 px-5" : 'hidden'}>
         <div className="grid grid-cols-6 text-xl font-semibold uppercase">
           <p>Name</p>
-          <p>symbol</p>
-          <p>price</p>
-          <p>volume</p>
-          <p>price change</p>
-          <p>market cap</p>
+          <p>Symbol</p>
+          <p>Price</p>
+          <p>Volume</p>
+          <p>Price change</p>
+          <p>Market cap</p>
         </div>
         <hr className="mt-4" />
         {
